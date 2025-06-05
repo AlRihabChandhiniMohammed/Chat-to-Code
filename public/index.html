@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat-to-Code Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Chat-to-Code Generator</h1>
+  <textarea id="prompt" placeholder="Describe what you want (e.g., create a red button)"></textarea>
+  <button onclick="generateCode()">Generate Code</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function generateCode() {
+      const prompt = document.getElementById('prompt').value;
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = data.code;
+    }
+  </script>
+</body>
+</html>
